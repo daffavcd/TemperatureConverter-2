@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'Sub/input.dart';
+import 'Sub/listku.dart';
+import 'Sub/text1.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +21,7 @@ class _MyAppState extends State<MyApp> {
 
   List<String> history = [];
   double result = 0;
-  String _newValue = "Kelvin";
+  String newValue = "Kelvin";
   String temp;
 
   void hitung(double value, String pilihan) {
@@ -33,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         temp2 = (4 / 5) * value;
       }
       this.result = double.parse(temp2.toStringAsFixed(1));
-      temp = (this.result).toString() + " " + this._newValue;
+      temp = (this.result).toString() + " " + this.newValue;
       this.history.add(temp);
     });
   }
@@ -60,54 +62,22 @@ class _MyAppState extends State<MyApp> {
                   return DropdownMenuItem(
                       value: value, child: Container(child: Text(value)));
                 }).toList(),
-                value: _newValue,
+                value: newValue,
                 onChanged: (String changeValue) {
                   setState(() {
-                    _newValue = changeValue;
+                    newValue = changeValue;
+                    hitung(double.parse(myController.text), newValue);
                   });
                 },
               ),
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  margin: const EdgeInsets.only(top: 150.0),
-                                  padding: const EdgeInsets.all(8.0),
-                                  alignment: Alignment.center,
-                                  child: Text("Result : ",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.black54)),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  alignment: Alignment.center,
-                                  child: Text("$result" + " " + _newValue,
-                                      style: TextStyle(
-                                          fontSize: 35, color: Colors.black)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Text1(result: result, newValue: newValue),
               Row(children: <Widget>[
                 Expanded(
                     child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
                     onPressed: () =>
-                        hitung(double.parse(myController.text), _newValue),
+                        hitung(double.parse(myController.text), newValue),
                     child: const Text('Convert now!',
                         style: TextStyle(fontSize: 20)),
                     color: Colors.blue,
@@ -128,18 +98,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
-              Expanded(
-                child: ListView(
-                    children: history.map((String value) {
-                  return Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.all(8.0),
-                      child: Text(
-                        value,
-                        style: TextStyle(fontSize: 18),
-                      ));
-                }).toList()),
-              ),
+              Listku(history: history),
             ],
           ),
         ),
