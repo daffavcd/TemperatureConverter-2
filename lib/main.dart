@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'Sub/input.dart';
 
@@ -68,7 +67,40 @@ class _MyAppState extends State<MyApp> {
                   });
                 },
               ),
-              Text(result: result, newValue: _newValue),
+              Expanded(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  margin: const EdgeInsets.only(top: 150.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: Text("Result : ",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black54)),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  alignment: Alignment.center,
+                                  child: Text("$result" + " " + _newValue,
+                                      style: TextStyle(
+                                          fontSize: 35, color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(children: <Widget>[
                 Expanded(
                     child: Container(
@@ -114,55 +146,5 @@ class _MyAppState extends State<MyApp> {
       ),
     );
     return materialApp;
-  }
-}
-
-class Text extends StatelessWidget {
-  const Text({
-    Key key,
-    @required this.result,
-    @required String newValue,
-  })  : _newValue = newValue,
-        super(key: key);
-
-  final double result;
-  final String _newValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(top: 150.0),
-                        padding: const EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text("Result : ",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black54)),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text("$result" + " " + _newValue,
-                            style:
-                                TextStyle(fontSize: 35, color: Colors.black)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
